@@ -1,7 +1,7 @@
-const url_data = "./samples.json";
-let data = 
+let data = {};
+
 // Fetch the JSON data with D3
-d3.json(url_data).then(d => {
+d3.json("./samples.json").then(d => {
     data = d;
 
     fill_subjets(d.names);
@@ -27,12 +27,12 @@ function fill_subjets(names) {
 }
 
 function fill_metadata(metadata) {
-    let list = to_key_value_pair(metadata);
+    let pair_list = to_pair_list(metadata);
 
     var dataset = d3.select("#metadata");
 
     var selection = dataset.selectAll("p")
-        .data(list);
+        .data(pair_list);
 
     selection.enter()
         .append("p")
@@ -40,7 +40,7 @@ function fill_metadata(metadata) {
         .text(d => `${d.key}: ${d.value}`);
 }
 
-function to_key_value_pair(obj) {
+function to_pair_list(obj) {
     let list = [];
     for ([key, value] of Object.entries(obj)) {
         list.push({'key': key, 'value': value});
