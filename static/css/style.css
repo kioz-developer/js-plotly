@@ -1,0 +1,24 @@
+.card-header {
+    padding: 10px;
+}
+
+.card-body {
+    padding: 10px; 
+}
+
+.alert-primary {
+    padding: 3px 0px 5px 15px; 
+}
+
+.alert-heading {
+    color: #343a40;
+}
+
+.card-body {
+    color: #343a40;
+}
+
+.card-body p {
+    font-weight: bold;
+    margin: 5px 0px 10px 0px;
+}
