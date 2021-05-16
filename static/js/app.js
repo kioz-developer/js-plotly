@@ -77,7 +77,17 @@ function plot_bubble(d, id) {
       
       var layout = {
         title: `OTUs found in individual ${id}`,
-        showlegend: false
+        showlegend: false,
+        yaxis: {
+            title: {
+                text: 'Samples'
+            }
+        },
+        xaxis: {
+            title: {
+                text: 'Operational taxonomic units'
+            }
+        }
       };
       
       Plotly.newPlot('bubble', data, layout);
