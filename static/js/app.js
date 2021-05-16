@@ -7,11 +7,50 @@ d3.json("./samples.json").then(d => {
     fill_subjets(d.names);
 
     fill_metadata(d.metadata[0]);
+    
+    plot_bar(d.samples[0], d.metadata[0].id);
 });
 
 function optionChanged(value) {
     let metadata = data.metadata.filter(d => d.id == value)[0];
+    let sample = data.samples.filter(d => d.id == value)[0];
+
     fill_metadata(metadata);
+    plot_bar(sample, value);
+}
+
+function plot_bar(d, id) {
+    var results = [];
+    d.sample_values.forEach((key, i) => results[d.sample_values[i]] = {
+        'sample_value': d.sample_values[i],
+        'otu_id': `OTU ${d.otu_ids[i]} `,
+        'otu_label': d.otu_labels[i]
+    });
+
+    results.sort(function(x, y){
+        return d3.descending(x.sample_value, y.sample_value);
+    });
+
+    // Get top 10 results
+    top10 = results.slice(0, 10);
+
+    console.log(top10);
+    console.log(top10.map(d => d.sample_value));
+    var trace1 = {
+        x: top10.map(d => d.sample_value).reverse(),
+        y: top10.map(d => d.otu_id).reverse(),
+        text: top10.map(d => d.otu_label).reverse(),
+        type: "bar",
+        orientation: 'h'
+    };
+
+    var data = [trace1];
+
+    var layout = {
+        title: `Top 10 OTUs found in individual ${id}`
+    };
+
+    Plotly.newPlot("bar", data, layout);
 }
 
 function fill_subjets(names) {
