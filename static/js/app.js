@@ -5,10 +5,10 @@ d3.json("./samples.json").then(d => {
     data = d;
 
     fill_subjets(d.names);
-
     fill_metadata(d.metadata[0]);
-    
+
     plot_bar(d.samples[0], d.metadata[0].id);
+    plot_bubble(d.samples[0], d.metadata[0].id);
 });
 
 function optionChanged(value) {
@@ -17,6 +17,7 @@ function optionChanged(value) {
 
     fill_metadata(metadata);
     plot_bar(sample, value);
+    plot_bubble(sample, value);
 }
 
 function plot_bar(d, id) {
@@ -51,6 +52,32 @@ function plot_bar(d, id) {
     };
 
     Plotly.newPlot("bar", data, layout);
+}
+
+function plot_bubble(d, id) {
+    let colors = d.otu_ids.map(d => 
+        `#${(d3.format("03")(d)).substring(0, 3)}`
+    ).reverse();
+    
+    var trace1 = {
+        x: d.otu_ids,
+        y: d.sample_values,
+        text: d.otu_labels,
+        mode: 'markers',
+        marker: {
+          size: d.sample_values,
+          color: colors
+        }
+      };
+      
+      var data = [trace1];
+      
+      var layout = {
+        title: `OTUs found in individual ${id}`,
+        showlegend: false
+      };
+      
+      Plotly.newPlot('bubble', data, layout);
 }
 
 function fill_subjets(names) {
