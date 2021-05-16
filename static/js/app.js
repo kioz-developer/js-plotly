@@ -9,6 +9,7 @@ d3.json("./samples.json").then(d => {
 
     plot_bar(d.samples[0], d.metadata[0].id);
     plot_bubble(d.samples[0], d.metadata[0].id);
+    plot_gauge(d.metadata[0], d.metadata[0].id);
 });
 
 function optionChanged(value) {
@@ -16,8 +17,10 @@ function optionChanged(value) {
     let sample = data.samples.filter(d => d.id == value)[0];
 
     fill_metadata(metadata);
+
     plot_bar(sample, value);
     plot_bubble(sample, value);
+    plot_gauge(metadata, value);
 }
 
 function plot_bar(d, id) {
@@ -78,6 +81,40 @@ function plot_bubble(d, id) {
       };
       
       Plotly.newPlot('bubble', data, layout);
+}
+
+function plot_gauge(metadata, id) {
+    var data = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: metadata.wfreq,
+            title: { text: `Scrubs Per Week` },
+            type: "indicator",
+            mode: "gauge+number",
+            gauge: {
+                axis: {
+                    range: [null, 9]
+                },
+                steps: [
+                    { range: [0, 1], color: "#f9f3ed" },
+                    { range: [1, 2], color: "#f4f0e5" },
+                    { range: [2, 3], color: "#e9e6c8" },
+                    { range: [3, 4], color: "#e4e9b0" },
+                    { range: [4, 5], color: "#d4e499" },
+                    { range: [5, 6], color: "#b6cc8f" },
+                    { range: [6, 7], color: "#8ac087" },
+                    { range: [7, 8], color: "#88bd8d" },
+                    { range: [8, 9], color: "#84b589" },
+                ]
+            }
+        }
+    ];
+
+    var layout = {
+        title: `Belly button Washing Frequency (${id})`
+    };
+
+    Plotly.newPlot('gauge', data, layout);
 }
 
 function fill_subjets(names) {
