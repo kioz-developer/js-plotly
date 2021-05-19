@@ -51,7 +51,9 @@ function plot_bar(d, id) {
     var data = [trace1];
 
     var layout = {
-        title: `Top 10 OTUs found in individual ${id}`
+        title: `Top 10 OTUs found in individual ${id}`,
+        paper_bgcolor: 'rgba(255,255,255,0.7)',
+        plot_bgcolor: 'rgba(255,255,255,0.0)'
     };
 
     Plotly.newPlot("bar", data, layout);
@@ -87,7 +89,9 @@ function plot_bubble(d, id) {
             title: {
                 text: 'Operational taxonomic units'
             }
-        }
+        },
+        paper_bgcolor: 'rgba(255,255,255,0.7)',
+        plot_bgcolor: 'rgba(255,255,255,0.0)'
       };
       
       Plotly.newPlot('bubble', data, layout);
@@ -121,7 +125,9 @@ function plot_gauge(metadata, id) {
     ];
 
     var layout = {
-        title: `Belly button Washing Frequency (${id})`
+        title: `Belly button Washing Frequency (${id})`,
+        paper_bgcolor: 'rgba(255,255,255,0.7)',
+        plot_bgcolor: 'rgba(255,255,255,0.0)'
     };
 
     Plotly.newPlot('gauge', data, layout);
